@@ -6,7 +6,7 @@
 /*   By: jchapman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 14:56:29 by jchapman          #+#    #+#             */
-/*   Updated: 2023/01/16 14:06:18 by jchapman         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:05:51 by jchapman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*cpyret(char *str, int len)
 	ret = malloc((len + 1) * sizeof str);
 	if (!ret)
 		return (NULL);
-	while (i < (len))
+	while (i < len)
 	{
 		ret[i] = str[i];
 		i++;

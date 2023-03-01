@@ -6,7 +6,7 @@
 /*   By: jchapman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:07:51 by jchapman          #+#    #+#             */
-/*   Updated: 2023/01/16 15:28:22 by jchapman         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:39:53 by jchapman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ static char	*prepbufferforread(char *str)
 	int		i;
 
 	i = 0;
-	temp = malloc((gnl_strlen(str) + BUFFER_SIZE + 1) * sizeof str);
-	if (!temp)
+	temp = str;
+	str = malloc((gnl_strlen(str) + BUFFER_SIZE + 1) * sizeof str);
+	if (!str)
 	{
-		str = (NULL);
-		return (str);
+		return (NULL);
 	}
-	if (str != NULL)
+	if (temp != NULL)
 	{
-		while (str[i])
+		while (temp[i])
 		{
-			temp[i] = str[i];
+			str[i] = temp[i];
 			i++;
 		}	
-		free(str);
+		free(temp);
 	}
-	temp[i] = '\0';
-	return (temp);
+	str[i] = '\0';
+	return (str);
 }
 
 static int	readfile(char *buffer, int fd)
@@ -58,9 +58,10 @@ static int	readfile(char *buffer, int fd)
 	int	bytesread;
 	int	i;
 
-	buffer = prepbufferforread(buffer);
+	buffer = prepbufferforread(buffer); //is this buffer is outta scope of static **buffer
 	i = gnl_strlen(buffer);
 	bytesread = read(fd, &buffer[i], BUFFER_SIZE);
+	printf("BB%s\n", buffer);
 	if (bytesread < 0)
 	{
 		free(buffer);
@@ -85,11 +86,12 @@ char	*get_next_line(int fd)
 		if (bytesread < 0)
 			return (NULL);
 	}
+	printf("AA%s\n", buffer[fd]);
 	ret = getlinefrombuff(buffer[fd]);
 	if (bytesread == 0 && buffer[fd] != NULL && gnl_strlen(buffer[fd]) == 0)
 	{
 		free(buffer[fd]);
-		buffer[fd] = (NULL);
+		return (NULL);
 	}
 	return (ret);
 }
