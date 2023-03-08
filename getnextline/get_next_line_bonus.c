@@ -18,12 +18,11 @@ static char	*getlinefrombuff(char *buffer)
 	int		i;
 
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	if (i == 0 && buffer[i] != '\n')
+	i = linelen(buffer);
+	if (i == 0)
+		i = gnl_strlen(buffer);
+	if (i == 0)
 		return (NULL);
-	else
-		i++;
 	ret = cpyret(buffer, i);
 	return (ret);
 }
@@ -71,11 +70,11 @@ char	*get_next_line(int fd)
 			buffer[fd] = freebuff(buffer[fd]);
 			return (NULL);
 		}
-		buffer[fd][i + bytesread] = '\0';
+		buffer[fd][i + BUFFER_SIZE] = '\0';
 	}
 	ret = getlinefrombuff(buffer[fd]);
 	buffer[fd] = trimbuff(buffer[fd]);
-	if (bytesread <= 0 && buffer[fd] != NULL && linelen(buffer[fd]) == 0)
+	if (bytesread <= 0 && buffer[fd] != NULL && gnl_strlen(buffer[fd]) == 0)
 		buffer[fd] = freebuff(buffer[fd]);
 	return (ret);
 }

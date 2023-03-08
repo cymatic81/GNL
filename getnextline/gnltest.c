@@ -14,7 +14,7 @@ int	main(void)
 //	int		fd2;
 //	int		fd3;
 
-	fd1 = open("gnltests/test2", O_RDONLY);
+	fd1 = open("gnltests/files/variable_nls.txt", O_RDONLY);
 	if (fd1 <= 0)
 		printf("open 1 failed\n");
 /*	fd2 = open("gnltests/test2", O_RDONLY);
@@ -26,7 +26,7 @@ int	main(void)
 
 	i = 1;
 //	ret = 0;
-	while (i <= 7)
+	while (i <= 13)
 	{
 		line = get_next_line(fd1);
 		printf("%s", line);

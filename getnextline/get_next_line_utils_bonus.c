@@ -51,17 +51,10 @@ char	*trimbuff(char *str)
 	char	*temp;
 	int		i;
 	int		j;
-	int		k;
 
 	j = 0;
-	i = linelen(str);
-	k = gnl_strlen(str);
-	if (i == 0)
-	{
-		free(str);
-		return (NULL);
-	}	
-	temp = malloc(((k - i) + 1) * sizeof str);
+	i = gnl_strlen(str);
+	temp = malloc((i + 1) * sizeof str);
 	while (str[i + j])
 	{
 		temp[j] = str[i + j];
