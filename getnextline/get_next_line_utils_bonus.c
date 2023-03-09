@@ -6,11 +6,11 @@
 /*   By: jchapman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 14:56:29 by jchapman          #+#    #+#             */
-/*   Updated: 2023/02/28 15:05:51 by jchapman         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:10:31 by jchapman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	linelen(char *str)
 {
@@ -51,10 +51,17 @@ char	*trimbuff(char *str)
 	char	*temp;
 	int		i;
 	int		j;
+	int		k;
 
 	j = 0;
-	i = gnl_strlen(str);
-	temp = malloc((i + 1) * sizeof str);
+	i = linelen(str);
+	k = gnl_strlen(str);
+	if (i == 0)
+	{
+		free(str);
+		return (NULL);
+	}	
+	temp = malloc(((k - i) + 1) * sizeof str);
 	while (str[i + j])
 	{
 		temp[j] = str[i + j];

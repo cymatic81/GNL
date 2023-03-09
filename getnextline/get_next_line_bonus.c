@@ -6,11 +6,11 @@
 /*   By: jchapman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:07:51 by jchapman          #+#    #+#             */
-/*   Updated: 2023/03/03 14:37:27 by jchapman         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:10:02 by jchapman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*getlinefrombuff(char *buffer)
 {
@@ -18,11 +18,12 @@ static char	*getlinefrombuff(char *buffer)
 	int		i;
 
 	i = 0;
-	i = linelen(buffer);
-	if (i == 0)
-		i = gnl_strlen(buffer);
-	if (i == 0)
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (i == 0 && buffer[i] != '\n')
 		return (NULL);
+	else
+		i++;
 	ret = cpyret(buffer, i);
 	return (ret);
 }
@@ -70,11 +71,11 @@ char	*get_next_line(int fd)
 			buffer[fd] = freebuff(buffer[fd]);
 			return (NULL);
 		}
-		buffer[fd][i + BUFFER_SIZE] = '\0';
+		buffer[fd][i + bytesread] = '\0';
 	}
 	ret = getlinefrombuff(buffer[fd]);
 	buffer[fd] = trimbuff(buffer[fd]);
-	if (bytesread <= 0 && buffer[fd] != NULL && gnl_strlen(buffer[fd]) == 0)
+	if (bytesread <= 0 && buffer[fd] != NULL && linelen(buffer[fd]) == 0)
 		buffer[fd] = freebuff(buffer[fd]);
 	return (ret);
 }
